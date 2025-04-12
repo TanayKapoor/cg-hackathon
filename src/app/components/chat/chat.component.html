@@ -1,0 +1,40 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>HR Assistant</h2>
+    <button class="leave-btn" (click)="toggleLeaveForm()" *ngIf="!showLeaveForm">
+      Request Leave
+    </button>
+  </div>
+
+  <div class="chat-messages" [class.blur]="showLeaveForm">
+    <div *ngFor="let message of messages">
+      <app-message-bubble [message]="message"></app-message-bubble>
+    </div>
+    <div *ngIf="loading" class="loading-indicator">
+      <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input" [class.blur]="showLeaveForm" *ngIf="!showLeaveForm">
+    <input 
+      type="text" 
+      [(ngModel)]="userInput" 
+      placeholder="Type your message..." 
+      (keyup.enter)="sendMessage()"
+    >
+    <button class="send-btn" (click)="sendMessage()" [disabled]="!userInput.trim()">
+      Send
+    </button>
+  </div>
+
+  <div class="leave-form-overlay" *ngIf="showLeaveForm">
+    <app-leave-form 
+      (submitted)="handleLeaveSubmit($event)" 
+      (cancel)="handleLeaveCancel()"
+    ></app-leave-form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="leave-form-container">
+  <h3>Request Leave</h3>
+  <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="leaveType">Leave Type</label>
+      <select id="leaveType" formControlName="type" class="form-control">
+        <option value="">Select type</option>
+        <option *ngFor="let type of leaveTypes" [value]="type">{{ type }}</option>
+      </select>
+      <div *ngIf="leaveForm.get('type')?.invalid && leaveForm.get('type')?.touched" class="error-message">
+        Leave type is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input type="date" id="startDate" formControlName="startDate" class="form-control">
+      <div *ngIf="leaveForm.get('startDate')?.invalid && leaveForm.get('startDate')?.touched" class="error-message">
+        Start date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input type="date" id="endDate" formControlName="endDate" class="form-control">
+      <div *ngIf="leaveForm.get('endDate')?.invalid && leaveForm.get('endDate')?.touched" class="error-message">
+        End date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="reason">Reason (Optional)</label>
+      <textarea id="reason" formControlName="reason" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="leaveForm.invalid">Submit</button>
+    </div>
+  </form>
+</div>
